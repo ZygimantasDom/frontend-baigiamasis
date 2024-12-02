@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -6,12 +7,25 @@ const RegistrationForm = () => {
     lastName: "",
     email: "",
     phone: "",
+    serviceId: "",
     date: "",
     time: "",
-    service: "",
   });
+  const [services, setServices] = useState([]);
+  const navigate = useNavigate();
 
-  const services = ["Paslauga 1", "Paslauga 2", "Paslauga 3", "Paslauga 4"];
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/services");
+        const data = await response.json();
+        setServices(data);
+      } catch (error) {
+        console.error("Klaida gaunant paslaugas:", error);
+      }
+    };
+    fetchServices();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,11 +35,30 @@ const RegistrationForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    alert("Registracija sėkminga!");
-    // Čia galite pridėti kodą, kuris išsaugo duomenis serveryje
+    try {
+      const response = await fetch("http://localhost:3000/reservations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || "Klaida registruojant rezervaciją."
+        );
+      }
+
+      const data = await response.json();
+      navigate("/reservations", { state: { reservation: data } });
+    } catch (error) {
+      console.error("Klaida registruojant rezervaciją:", error);
+      alert(`Klaida: ${error.message}`);
+    }
   };
 
   return (
@@ -70,7 +103,7 @@ const RegistrationForm = () => {
         </div>
         <div style={{ marginBottom: "10px" }}>
           <label>
-            Telefono numeris:
+            Telefonas:
             <input
               type="tel"
               name="phone"
@@ -78,6 +111,24 @@ const RegistrationForm = () => {
               onChange={handleChange}
               required
             />
+          </label>
+        </div>
+        <div style={{ marginBottom: "10px" }}>
+          <label>
+            Paslauga:
+            <select
+              name="service"
+              value={formData.service}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Pasirinkite paslaugą</option>
+              {services.map((service) => (
+                <option key={service._id} value={service.name}>
+                  {service.name}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
         <div style={{ marginBottom: "10px" }}>
@@ -102,24 +153,6 @@ const RegistrationForm = () => {
               onChange={handleChange}
               required
             />
-          </label>
-        </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>
-            Paslauga:
-            <select
-              name="service"
-              value={formData.service}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Pasirinkite paslaugą</option>
-              {services.map((service, index) => (
-                <option key={index} value={service}>
-                  {service}
-                </option>
-              ))}
-            </select>
           </label>
         </div>
         <button type="submit">Registruotis</button>
