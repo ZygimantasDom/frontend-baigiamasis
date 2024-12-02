@@ -14,6 +14,7 @@ const pages = [
   { name: "Apie mus", path: "/about" },
   { name: "Paslaugos", path: "/services" },
   { name: "Registracija", path: "/register" },
+  { name: "Visos rezervacijos", path: "/all-reservations" },
 ];
 
 function ResponsiveAppBar() {

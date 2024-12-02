@@ -7,6 +7,8 @@ import Header from "./components/Header";
 import ServicesPage from "./pages/ServicesPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import ReservationsPage from "./pages/ReservationsPage";
+import EditReservationForm from "./components/EditReservationForm";
+import AllReservationsPage from "./pages/AllReservationsPage";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="/reservations" element={<ReservationsPage />} />
+        <Route path="/all-reservations" element={<AllReservationsPage />} />
+        <Route path="/edit-reservation" element={<EditReservationForm />} />
       </Routes>
     </Router>
   );
