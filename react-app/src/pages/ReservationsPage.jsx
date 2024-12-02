@@ -5,6 +5,32 @@ const ReservationsPage = () => {
   const navigate = useNavigate();
   const reservation = location.state?.reservation;
 
+  const handleDelete = async () => {
+    if (!window.confirm("Ar tikrai norite ištrinti šią rezervaciją?")) {
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/reservations/${reservation._id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Nepavyko ištrinti rezervacijos.");
+      }
+      navigate("/register");
+    } catch (error) {
+      console.error("Klaida ištrinant rezervaciją:", error);
+    }
+  };
+
+  const handleEdit = () => {
+    navigate("/edit-reservation", { state: { reservation } });
+  };
+
   if (!reservation) {
     return (
       <div style={{ padding: "20px" }}>
@@ -47,11 +73,21 @@ const ReservationsPage = () => {
         <p>
           <strong>Paslauga:</strong> {reservation.serviceId?.name || "Nežinoma"}
         </p>
+        <p>
+          <strong>Kaina:</strong> {reservation.serviceId?.price || "Nenurodyta"}{" "}
+          €
+        </p>
         <button
-          onClick={() => navigate("/register")}
-          style={{ marginTop: "20px" }}
+          onClick={handleEdit}
+          style={{ marginRight: "10px", marginTop: "20px" }}
         >
-          Grįžti į registracijos formą
+          Koreguoti
+        </button>
+        <button
+          onClick={handleDelete}
+          style={{ backgroundColor: "red", color: "white", marginTop: "20px" }}
+        >
+          Ištrinti
         </button>
       </div>
     </div>
