@@ -11,6 +11,7 @@ import EditReservationForm from "./components/EditReservationForm";
 import AllReservationsPage from "./pages/AllReservationsPage";
 import UsersPage from "./pages/UsersPage";
 import EditUserForm from "./components/EditUserForm";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/users" element={<UsersPage />} />
         <Route path="/edit-user" element={<EditUserForm />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

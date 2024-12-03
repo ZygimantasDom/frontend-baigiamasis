@@ -1,0 +1,85 @@
+$overlay-color: rgba(0, 0, 0, 0.4);
+$blur-intensity: 10px;
+$text-color: white;
+
+html,
+body,
+#root {
+  // margin: 0;
+  // padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.main {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+
+  .coverVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $overlay-color;
+    backdrop-filter: blur($blur-intensity);
+    z-index: 1;
+  }
+
+  .content {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    color: $text-color;
+    text-align: center;
+
+    h1 {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+      animation-name: fadeLeft;
+      animation-duration: 4s;
+    }
+
+    p {
+      font-size: 2rem;
+      animation-name: fadeRight;
+      animation-duration: 4s;
+    }
+  }
+}
+@keyframes fadeLeft {
+  0% {
+    opacity: 0;
+    margin-left: 3em;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeRight {
+  0% {
+    opacity: 0;
+    margin-right: 3em;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -30,7 +30,14 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "sky-blue" }}>
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: "rgba(0, 0, 0, 0.2)",
+        boxShadow: "none",
+        color: "white",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -48,7 +55,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            Masazas
+            MyApp
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -103,7 +110,7 @@ function ResponsiveAppBar() {
                 to={page.path}
                 sx={{
                   my: 2,
-                  color: "white",
+                  color: "inherit",
                   display: "block",
                   textDecoration: "none",
                   marginX: 2,
