@@ -7,3 +7,35 @@
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
+/* 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  height: 60px;
+  background-color: #333;
+  color: white;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+}
+
+footer {
+  height: 100px;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+} */

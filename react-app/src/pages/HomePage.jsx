@@ -4,7 +4,7 @@ import "../scss/homePage.scss";
 
 const HomePage = () => {
   return (
-    <div className="main">
+    <div className="main home">
       <div className="overlay"></div>
       <video className="coverVideo" src={videoBg} autoPlay loop muted></video>
       <div className="content">
