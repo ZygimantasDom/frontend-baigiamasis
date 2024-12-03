@@ -15,6 +15,7 @@ const pages = [
   { name: "Paslaugos", path: "/services" },
   { name: "Registracija", path: "/register" },
   { name: "Visos rezervacijos", path: "/all-reservations" },
+  { name: "Vartotojai", path: "/users" },
 ];
 
 function ResponsiveAppBar() {
