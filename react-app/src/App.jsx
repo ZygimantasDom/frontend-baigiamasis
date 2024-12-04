@@ -1,17 +1,18 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
+import HomePage from "./pages/home/HomePage";
+import AboutPage from "./pages/about/AboutPage";
 import Header from "./components/Header";
-import ServicesPage from "./pages/ServicesPage";
-import RegistrationPage from "./pages/RegistrationPage";
-import ReservationsPage from "./pages/ReservationsPage";
+import ServicesPage from "./pages/servicesPage/ServicesPage";
+import RegistrationPage from "./pages/registration/RegistrationPage";
+import ReservationsPage from "./pages/reservations/ReservationsPage";
 import EditReservationForm from "./components/EditReservationForm";
-import AllReservationsPage from "./pages/AllReservationsPage";
-import UsersPage from "./pages/UsersPage";
+import AllReservationsPage from "./pages/reservations/AllReservationsPage";
 import EditUserForm from "./components/EditUserForm";
 import Footer from "./components/Footer";
+import UsersPage from "./pages/users/UsersPage";
+import NotFoundPage from "./pages/notFound/NotFoundPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/edit-reservation" element={<EditReservationForm />} />
         <Route path="/users" element={<UsersPage />} />
         <Route path="/edit-user" element={<EditUserForm />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </Router>

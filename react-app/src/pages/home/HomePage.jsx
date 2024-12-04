@@ -1,6 +1,6 @@
 import React from "react";
-import videoBg from "../assets/videoBg.mp4";
-import "../scss/homePage.scss";
+import videoBg from "../../assets/videoBg.mp4";
+import "../../scss/homePage.scss";
 
 const HomePage = () => {
   return (
