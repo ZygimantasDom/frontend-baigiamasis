@@ -1,15 +1,21 @@
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import API_ROUTE from "../utils/apiRoute";
 
 const EditReservationForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const reservation = location.state?.reservation;
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = React.useState({
     date: reservation?.date || "",
     time: reservation?.time || "",
-    status: reservation?.status || "confirmed",
   });
 
   const handleChange = (e) => {
@@ -22,10 +28,13 @@ const EditReservationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
+      if (!reservation?._id) {
+        throw new Error("Trūksta rezervacijos ID.");
+      }
+
       const response = await fetch(
-        `http://localhost:3000/reservations/${reservation._id}`,
+        `${API_ROUTE}/reservations/${reservation._id}`,
         {
           method: "PATCH",
           headers: {
@@ -38,51 +47,81 @@ const EditReservationForm = () => {
       if (!response.ok) {
         throw new Error("Nepavyko atnaujinti rezervacijos.");
       }
+
       const updatedReservation = await response.json();
       navigate("/all-reservations", {
         state: { reservation: updatedReservation },
       });
     } catch (error) {
-      console.error("Klaida atnaujinant rezervaciją:", error);
+      console.error("Klaida atnaujinant rezervaciją:", error.message);
     }
   };
 
   return (
-    <div style={{ maxWidth: "500px", margin: "0 auto", padding: "20px" }}>
-      <h2>Koreguoti rezervaciją</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <label>
-            Data:
-            <input
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        background: "linear-gradient(to right, #f3f4f6, #e3e6ea)",
+        padding: 2,
+      }}
+    >
+      <Card sx={{ maxWidth: 400, width: "100%", padding: 2, boxShadow: 3 }}>
+        <CardContent>
+          <Typography variant="h5" gutterBottom align="center">
+            Koreguoti rezervaciją
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              label="Data"
               type="date"
               name="date"
               value={formData.date.split("T")[0]}
               onChange={handleChange}
+              fullWidth
+              sx={{ marginBottom: 2 }}
               required
             />
-          </label>
-        </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>
-            Laikas:
-            <input
+            <TextField
+              label="Laikas"
               type="time"
               name="time"
               value={formData.time}
               onChange={handleChange}
+              fullWidth
+              sx={{ marginBottom: 2 }}
               required
             />
-          </label>
-        </div>
-        <button type="submit" style={{ marginRight: "10px" }}>
-          Išsaugoti
-        </button>
-        <button type="button" onClick={() => navigate("/reservations")}>
-          Atšaukti
-        </button>
-      </form>
-    </div>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: 2,
+              }}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                sx={{ flex: 1, marginRight: 1 }}
+              >
+                Išsaugoti
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => navigate("/all-reservations")}
+                sx={{ flex: 1 }}
+              >
+                Atšaukti
+              </Button>
+            </Box>
+          </form>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 
