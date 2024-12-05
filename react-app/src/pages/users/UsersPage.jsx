@@ -12,6 +12,9 @@ const UsersPage = () => {
     const fetchUsers = async () => {
       try {
         const response = await fetch(`${API_ROUTE}/users`);
+        if (!response.ok) {
+          throw new Error("Nepavyko gauti vartotojų.");
+        }
         const data = await response.json();
         setUsers(data);
       } catch (error) {
@@ -43,41 +46,55 @@ const UsersPage = () => {
   };
 
   return (
-    <div className="users-page">
+    <div
+      className="users-page"
+      style={{
+        background: users.length === 0 ? "#f4f4f4" : "inherit",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: users.length === 0 ? "center" : "flex-start",
+      }}
+    >
       <h1>Vartotojų sąrašas</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Vardas</th>
-            <th>El. paštas</th>
-            <th>Telefonas</th>
-            <th>Veiksmai</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user._id}>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.phone}</td>
-              <td className="actions">
-                <button
-                  className="edit-btn"
-                  onClick={() => navigate("/edit-user", { state: { user } })}
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(user._id)}
-                >
-                  <FaTrashAlt />
-                </button>
-              </td>
+      {users.length === 0 ? (
+        <p style={{ fontSize: "18px", color: "#888" }}>Vartotojų nėra</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Vardas</th>
+              <th>El. paštas</th>
+              <th>Telefonas</th>
+              <th>Veiksmai</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+                <td className="actions">
+                  <button
+                    className="edit-btn"
+                    onClick={() => navigate("/edit-user", { state: { user } })}
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(user._id)}
+                  >
+                    <FaTrashAlt />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
