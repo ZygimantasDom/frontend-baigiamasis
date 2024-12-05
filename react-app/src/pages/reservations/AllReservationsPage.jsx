@@ -26,10 +26,6 @@ const AllReservationsPage = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Ar tikrai norite ištrinti šią rezervaciją?")) {
-      return;
-    }
-
     try {
       const response = await fetch(`${API_ROUTE}/reservations/${id}`, {
         method: "DELETE",

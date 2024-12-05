@@ -14,10 +14,6 @@ const ReservationsPage = () => {
   const reservation = location.state?.reservation;
 
   const handleDelete = async () => {
-    if (!window.confirm("Ar tikrai norite ištrinti šią rezervaciją?")) {
-      return;
-    }
-
     try {
       const response = await fetch(
         `${API_ROUTE}/reservations/${reservation._id}`,
