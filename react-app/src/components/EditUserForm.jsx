@@ -43,11 +43,9 @@ const EditUserForm = () => {
         throw new Error("Nepavyko atnaujinti vartotojo.");
       }
 
-      alert("Vartotojas sėkmingai atnaujintas.");
       navigate("/users");
     } catch (error) {
       console.error("Klaida atnaujinant vartotoją:", error);
-      alert("Klaida atnaujinant vartotoją.");
     }
   };
 
