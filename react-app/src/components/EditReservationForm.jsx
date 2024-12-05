@@ -44,10 +44,6 @@ const EditReservationForm = () => {
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Nepavyko atnaujinti rezervacijos.");
-      }
-
       const updatedReservation = await response.json();
       navigate("/all-reservations", {
         state: { reservation: updatedReservation },
@@ -56,6 +52,8 @@ const EditReservationForm = () => {
       console.error("Klaida atnaujinant rezervaciją:", error.message);
     }
   };
+
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <Box
@@ -81,6 +79,7 @@ const EditReservationForm = () => {
               value={formData.date.split("T")[0]}
               onChange={handleChange}
               fullWidth
+              min={today}
               sx={{ marginBottom: 2 }}
               required
             />

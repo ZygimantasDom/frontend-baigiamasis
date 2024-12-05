@@ -42,7 +42,6 @@ const EditUserForm = () => {
       if (!response.ok) {
         throw new Error("Nepavyko atnaujinti vartotojo.");
       }
-
       navigate("/users");
     } catch (error) {
       console.error("Klaida atnaujinant vartotoją:", error);
